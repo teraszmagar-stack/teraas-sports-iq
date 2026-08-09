@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Teraas Sports IQ MVP</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#070b12;color:#f7f9fc;font-family:Inter,Arial,sans-serif}.top{position:sticky;top:0;z-index:3;background:#0a1019eF;border-bottom:1px solid #202a38;padding:15px 5%;display:flex;justify-content:space-between;align-items:center}.logo{font-size:22px;font-weight:900}.logo span{color:#38d996}.btn,.pill{border:1px solid #263346;background:#121a25;color:#fff;padding:10px 14px;border-radius:10px}.wrap{max-width:1180px;margin:auto;padding:30px 18px}.hero{padding:35px 0}.hero h1{font-size:clamp(38px,7vw,68px);margin:8px 0}.muted{color:#8d99aa}.green{color:#38d996}.stats,.grid{display:grid;gap:15px}.stats{grid-template-columns:repeat(3,1fr)}.stat,.card{background:#0f1722;border:1px solid #202a38;border-radius:18px;padding:18px}.stat b{font-size:27px;display:block}.sports{display:flex;gap:8px;overflow:auto;margin:24px 0}.sports button{white-space:nowrap}.grid{grid-template-columns:repeat(2,1fr)}.cardtop{display:flex;justify-content:space-between;color:#8792a3;font-size:12px}.teams{display:grid;grid-template-columns:1fr auto 1fr;text-align:center;align-items:center;margin:22px 0}.icon{font-size:35px;margin-bottom:6px}.pick{background:#0a111a;border:1px solid #1e2a38;border-radius:13px;padding:13px}.bar{height:6px;background:#253041;border-radius:8px;margin-top:10px}.bar i{display:block;height:100%;background:#38d996;border-radius:8px}.probs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:10px}.probs div{background:#121c28;padding:8px;border-radius:9px;text-align:center;color:#8f9bad;font-size:11px}.probs b{display:block;color:white;font-size:14px}.actions{display:flex;gap:8px;margin-top:12px}.actions button{flex:1}.footer{text-align:center;padding:45px;color:#667386;font-size:12px}@media(max-width:700px){.grid,.stats{grid-template-columns:1fr}.top{padding:14px 18px}}
+</style></head>
+<body>
+<header class="top"><div class="logo">Teraas <span>Sports IQ</span></div><button class="btn" onclick="alert('Login system ready for Supabase integration.')">Sign in</button></header>
+<main class="wrap">
+<section class="hero"><div class="green">LIVE SPORTS ANALYTICS</div><h1>Predict smarter.</h1><p class="muted">All-sports match intelligence, probabilities and confidence scores in one dashboard.</p></section>
+<section class="stats"><div class="stat"><b>82.4%</b><span class="muted">Model accuracy</span></div><div class="stat"><b>1,248</b><span class="muted">Predictions tracked</span></div><div class="stat"><b>12+</b><span class="muted">Sports covered</span></div></section>
+<div class="sports" id="sports"></div><section class="grid" id="matches"></section>
+</main><footer class="footer">Teraas Sports IQ MVP · Analytics only. Predictions are estimates, not guarantees.</footer>
+<script>
+const data=[
+["Football","Premier League","Arsenal","Chelsea","⚽","🔵","Arsenal",78,[58,24,18],"Recent form and home performance favor Arsenal."],
+["Football","La Liga","Barcelona","Atlético Madrid","🔴","🔴","Barcelona",71,[54,27,19],"Possession and chance creation favor Barcelona."],
+["Basketball","NBA","Lakers","Celtics","🏀","☘️","Celtics",76,[22,0,78],"Efficiency and defensive metrics favor Boston."],
+["Cricket","T20 International","India","Australia","🇮🇳","🇦🇺","India",69,[69,0,31],"Batting depth and spin options improve India's projection."],
+["Tennis","ATP Masters","Alcaraz","Sinner","🎾","🎾","Alcaraz",55,[55,0,45],"A close matchup with a narrow surface-adjusted edge."],
+["Ice Hockey","NHL","Bruins","Rangers","🏒","🏒","Rangers",63,[37,0,63],"Goaltending and special teams favor New York."],
+["Baseball","MLB","Dodgers","Yankees","⚾","⚾","Dodgers",67,[67,0,33],"Pitching and bullpen depth favor Los Angeles."],
+["Volleyball","Nations League","Brazil","Italy","🏐","🏐","Brazil",64,[64,0,36],"Serve efficiency and recent set differential are positive."]
+];
+let active="All";
+const sports=["All",...new Set(data.map(x=>x[0]))];
+function drawSports(){document.querySelector("#sports").innerHTML=sports.map(s=>`<button class="pill" onclick="active='${s}';drawSports();draw()">${s}</button>`).join("")}
+function draw(){document.querySelector("#matches").innerHTML=data.filter(x=>active==="All"||x[0]===active).map(x=>`<article class="card"><div class="cardtop"><span>${x[0]} · ${x[1]}</span><span>Today</span></div><div class="teams"><div><div class="icon">${x[4]}</div><b>${x[2]}</b></div><span class="muted">VS</span><div><div class="icon">${x[5]}</div><b>${x[3]}</b></div></div><div class="pick"><div><span class="muted">Model pick</span><strong class="green"> ${x[6]}</strong><span style="float:right">${x[7]}%</span></div><div class="bar"><i style="width:${x[7]}%"></i></div><div class="probs">${x[8].map((p,i)=>`<div>${i===0?x[2]:i===1?"Draw":x[3]}<b>${p?p+"%":"—"}</b></div>`).join("")}</div><p class="muted">${x[9]}</p><div class="actions"><button class="btn" onclick="alert('Detailed analytics will be connected to the live data API.')">Analytics</button><button class="btn" onclick="alert('Saved locally in this MVP.')">☆ Save</button></div></div></article>`).join("")}
+drawSports();draw();
+</script></body></html>
